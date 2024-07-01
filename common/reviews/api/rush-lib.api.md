@@ -120,6 +120,7 @@ export type CobuildLockProviderFactory = (cobuildJson: ICobuildJson) => ICobuild
 // @public
 export class CommonVersionsConfiguration {
     readonly allowedAlternativeVersions: Map<string, ReadonlyArray<string>>;
+    readonly ensureConsistentVersions: boolean | undefined;
     readonly filePath: string;
     getAllPreferredVersions(): Map<string, string>;
     getPreferredVersionsHash(): string;
@@ -297,7 +298,7 @@ export class EventHooks {
 // @public
 export class ExperimentsConfiguration {
     // @internal
-    constructor(jsonFileName: string);
+    constructor(jsonFilePath: string);
     // @beta
     readonly configuration: Readonly<IExperimentsJson>;
 }
@@ -473,7 +474,6 @@ export interface IExperimentsJson {
     generateProjectImpactGraphDuringRushUpdate?: boolean;
     noChmodFieldInTarHeaderNormalization?: boolean;
     omitImportersFromPreventManualShrinkwrapChanges?: boolean;
-    phasedCommands?: boolean;
     printEventHooksOutputToConsole?: boolean;
     useIPCScriptsInWatchMode?: boolean;
     usePnpmFrozenLockfileForRushInstall?: boolean;
@@ -585,6 +585,7 @@ export interface _IOperationMetadataManagerOptions {
 
 // @alpha
 export interface IOperationOptions {
+    logFilenameIdentifier: string;
     phase?: IPhase | undefined;
     project?: RushConfigurationProject | undefined;
     runner?: IOperationRunner | undefined;
@@ -912,7 +913,7 @@ export class NpmOptionsConfiguration extends PackageManagerOptionsConfigurationB
 
 // @alpha
 export class Operation {
-    constructor(options?: IOperationOptions);
+    constructor(options: IOperationOptions);
     addDependency(dependency: Operation): void;
     readonly associatedPhase: IPhase | undefined;
     readonly associatedProject: RushConfigurationProject | undefined;
@@ -920,6 +921,7 @@ export class Operation {
     deleteDependency(dependency: Operation): void;
     readonly dependencies: ReadonlySet<Operation>;
     get isNoOp(): boolean;
+    logFilenameIdentifier: string;
     get name(): string | undefined;
     runner: IOperationRunner | undefined;
     settings: IOperationSettings | undefined;
@@ -1123,6 +1125,7 @@ export class RepoStateFile {
     readonly filePath: string;
     get isValid(): boolean;
     static loadFromFile(jsonFilename: string): RepoStateFile;
+    get packageJsonInjectedDependenciesHash(): string | undefined;
     get pnpmShrinkwrapHash(): string | undefined;
     get preferredVersionsHash(): string | undefined;
     refreshState(rushConfiguration: RushConfiguration, subspace: Subspace | undefined): boolean;
@@ -1164,6 +1167,7 @@ export class RushConfiguration {
     readonly customTipsConfigurationFilePath: string;
     // @beta (undocumented)
     get defaultSubspace(): Subspace;
+    // @deprecated
     readonly ensureConsistentVersions: boolean;
     // @beta
     readonly eventHooks: EventHooks;
@@ -1458,6 +1462,8 @@ export class Subspace {
     // @beta
     getCommonVersionsFilePath(): string;
     // @beta
+    getPackageJsonInjectedDependenciesHash(): string | undefined;
+    // @beta
     getPnpmConfigFilePath(): string;
     // @beta
     getPnpmfilePath(): string;
@@ -1477,6 +1483,8 @@ export class Subspace {
     getTempShrinkwrapFilename(): string;
     // @beta
     getTempShrinkwrapPreinstallFilename(subspaceName?: string | undefined): string;
+    // @beta
+    get shouldEnsureConsistentVersions(): boolean;
     // (undocumented)
     readonly subspaceName: string;
 }

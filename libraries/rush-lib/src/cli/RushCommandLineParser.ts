@@ -58,6 +58,7 @@ import { type ICustomCommandLineConfigurationInfo, PluginManager } from '../plug
 import { RushSession } from '../pluginFramework/RushSession';
 import { PhasedScriptAction } from './scriptActions/PhasedScriptAction';
 import type { IBuiltInPluginConfiguration } from '../pluginFramework/PluginLoader/BuiltInPluginLoader';
+import { InitSubspaceAction } from './actions/InitSubspaceAction';
 
 /**
  * Options for `RushCommandLineParser`.
@@ -263,6 +264,7 @@ export class RushCommandLineParser extends CommandLineParser {
       this.addAction(new InitAction(this));
       this.addAction(new InitAutoinstallerAction(this));
       this.addAction(new InitDeployAction(this));
+      this.addAction(new InitSubspaceAction(this));
       this.addAction(new InstallAction(this));
       this.addAction(new LinkAction(this));
       this.addAction(new ListAction(this));
@@ -325,18 +327,6 @@ export class RushCommandLineParser extends CommandLineParser {
       }
 
       case RushConstants.phasedCommandKind: {
-        if (
-          !command.isSynthetic && // synthetic commands come from bulk commands
-          !this.rushConfiguration.experimentsConfiguration.configuration.phasedCommands
-        ) {
-          throw new Error(
-            `${RushConstants.commandLineFilename} defines a command "${command.name}" ` +
-              `that uses the "${RushConstants.phasedCommandKind}" command kind. To use this command kind, ` +
-              'the "phasedCommands" experiment must be enabled. Note that this feature is not complete ' +
-              'and will not work as expected.'
-          );
-        }
-
         this._addPhasedCommandLineConfigAction(commandLineConfiguration, command);
         break;
       }

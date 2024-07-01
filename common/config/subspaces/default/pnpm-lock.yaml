@@ -198,9 +198,15 @@ importers:
       '@rushstack/node-core-library':
         specifier: workspace:*
         version: link:../../libraries/node-core-library
+      '@rushstack/rush-sdk':
+        specifier: workspace:*
+        version: link:../../libraries/rush-sdk
       '@rushstack/terminal':
         specifier: workspace:*
         version: link:../../libraries/terminal
+      '@rushstack/ts-command-line':
+        specifier: workspace:*
+        version: link:../../libraries/ts-command-line
       cors:
         specifier: ~2.8.5
         version: 2.8.5
@@ -213,13 +219,16 @@ importers:
       open:
         specifier: ~8.4.0
         version: 8.4.2
+      semver:
+        specifier: ~7.5.4
+        version: 7.5.4
       update-notifier:
         specifier: ~5.1.0
         version: 5.1.0
     devDependencies:
       '@pnpm/lockfile-types':
-        specifier: ~6.0.0
-        version: 6.0.0
+        specifier: ^5.1.5
+        version: 5.1.5
       '@rushstack/heft':
         specifier: workspace:*
         version: link:../heft
@@ -235,6 +244,9 @@ importers:
       '@types/js-yaml':
         specifier: 3.12.1
         version: 3.12.1
+      '@types/semver':
+        specifier: 7.5.0
+        version: 7.5.0
       '@types/update-notifier':
         specifier: ~6.0.1
         version: 6.0.8
@@ -3330,8 +3342,8 @@ importers:
         specifier: ~6.1.0
         version: 6.1.1
       pnpm-sync-lib:
-        specifier: 0.2.6
-        version: 0.2.6
+        specifier: 0.2.9
+        version: 0.2.9
       read-package-tree:
         specifier: ~5.1.5
         version: 5.1.6
@@ -3439,12 +3451,18 @@ importers:
       '@rushstack/heft':
         specifier: workspace:*
         version: link:../../apps/heft
+      '@rushstack/heft-webpack5-plugin':
+        specifier: workspace:*
+        version: link:../../heft-plugins/heft-webpack5-plugin
       '@rushstack/stream-collator':
         specifier: workspace:*
         version: link:../stream-collator
       '@rushstack/ts-command-line':
         specifier: workspace:*
         version: link:../ts-command-line
+      '@rushstack/webpack-preserve-dynamic-require-plugin':
+        specifier: workspace:*
+        version: link:../../webpack/preserve-dynamic-require-plugin
       '@types/semver':
         specifier: 7.5.0
         version: 7.5.0
@@ -3454,6 +3472,9 @@ importers:
       local-node-rig:
         specifier: workspace:*
         version: link:../../rigs/local-node-rig
+      webpack:
+        specifier: ~5.82.1
+        version: 5.82.1
 
   ../../../libraries/rush-themed-ui:
     dependencies:
@@ -3925,8 +3946,8 @@ importers:
   ../../../rush-plugins/rush-azure-storage-build-cache-plugin:
     dependencies:
       '@azure/identity':
-        specifier: ~4.0.0
-        version: 4.0.1
+        specifier: ~4.2.1
+        version: 4.2.1
       '@azure/storage-blob':
         specifier: ~12.17.0
         version: 12.17.0
@@ -5192,8 +5213,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@azure/identity@4.0.1:
-    resolution: {integrity: sha512-yRdgF03SFLqUMZZ1gKWt0cs0fvrDIkq2bJ6Oidqcoo5uM85YMBnXWMzYKK30XqIT76lkFyAaoAAy5knXhrG4Lw==}
+  /@azure/identity@4.2.1:
+    resolution: {integrity: sha512-U8hsyC9YPcEIzoaObJlRDvp7KiF0MGS7xcWbyJSVvXRkC/HXo1f0oYeBYmEvVgRfacw7GHf6D6yAoh9JHz6A5Q==}
     engines: {node: '>=18.0.0'}
     dependencies:
       '@azure/abort-controller': 1.1.0
@@ -5203,8 +5224,8 @@ packages:
       '@azure/core-tracing': 1.1.0
       '@azure/core-util': 1.8.0
       '@azure/logger': 1.1.0
-      '@azure/msal-browser': 3.10.0
-      '@azure/msal-node': 2.6.4
+      '@azure/msal-browser': 3.17.0
+      '@azure/msal-node': 2.9.2
       events: 3.3.0
       jws: 4.0.0
       open: 8.4.2
@@ -5221,23 +5242,23 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@azure/msal-browser@3.10.0:
-    resolution: {integrity: sha512-mnmi8dCXVNZI+AGRq0jKQ3YiodlIC4W9npr6FCB9WN6NQT+6rq+cIlxgUb//BjLyzKsnYo+i4LROGeMyU+6v1A==}
+  /@azure/msal-browser@3.17.0:
+    resolution: {integrity: sha512-csccKXmW2z7EkZ0I3yAoW/offQt+JECdTIV/KrnRoZyM7wCSsQWODpwod8ZhYy7iOyamcHApR9uCh0oD1M+0/A==}
     engines: {node: '>=0.8.0'}
     dependencies:
-      '@azure/msal-common': 14.7.1
+      '@azure/msal-common': 14.12.0
     dev: false
 
-  /@azure/msal-common@14.7.1:
-    resolution: {integrity: sha512-v96btzjM7KrAu4NSEdOkhQSTGOuNUIIsUdB8wlyB9cdgl5KqEKnTonHUZ8+khvZ6Ap542FCErbnTyDWl8lZ2rA==}
+  /@azure/msal-common@14.12.0:
+    resolution: {integrity: sha512-IDDXmzfdwmDkv4SSmMEyAniJf6fDu3FJ7ncOjlxkDuT85uSnLEhZi3fGZpoR7T4XZpOMx9teM9GXBgrfJgyeBw==}
     engines: {node: '>=0.8.0'}
     dev: false
 
-  /@azure/msal-node@2.6.4:
-    resolution: {integrity: sha512-nNvEPx009/80UATCToF+29NZYocn01uKrB91xtFr7bSqkqO1PuQGXRyYwryWRztUrYZ1YsSbw9A+LmwOhpVvcg==}
+  /@azure/msal-node@2.9.2:
+    resolution: {integrity: sha512-8tvi6Cos3m+0KmRbPjgkySXi+UQU/QiuVRFnrxIwt5xZlEEFa69O04RTaNESGgImyBBlYbo2mfE8/U8Bbdk1WQ==}
     engines: {node: '>=16'}
     dependencies:
-      '@azure/msal-common': 14.7.1
+      '@azure/msal-common': 14.12.0
       jsonwebtoken: 9.0.2
       uuid: 8.3.2
     dev: false
@@ -9508,11 +9529,11 @@ packages:
       ramda: 0.27.2
     dev: false
 
-  /@pnpm/lockfile-types@6.0.0:
-    resolution: {integrity: sha512-a4/ULIPLZIIq8Qmi2HEoFgRTtEouGU5RNhuGDxnSmkxu1BjlNMNjLJeEI5jzMZCGOjBoML+AirY/XOO3bcEQ/w==}
-    engines: {node: '>=18.12'}
+  /@pnpm/lockfile-types@5.1.5:
+    resolution: {integrity: sha512-02FP0HynzX+2DcuPtuMy7PH+kLIC0pevAydAOK+zug2bwdlSLErlvSkc+4+3dw60eRWgUXUqyfO2eR/Ansdbng==}
+    engines: {node: '>=16.14'}
     dependencies:
-      '@pnpm/types': 10.0.0
+      '@pnpm/types': 9.4.2
     dev: true
 
   /@pnpm/logger@4.0.0:
@@ -9567,11 +9588,6 @@ packages:
       strip-bom: 4.0.0
     dev: false
 
-  /@pnpm/types@10.0.0:
-    resolution: {integrity: sha512-P608MRTOExt5BkIN2hsrb/ycEchwaPW/x80ujJUAqxKZSXNVAOrlEu3KJ+2+jTCunyWmo/EcE01ZdwCw8jgVrQ==}
-    engines: {node: '>=18.12'}
-    dev: true
-
   /@pnpm/types@6.4.0:
     resolution: {integrity: sha512-nco4+4sZqNHn60Y4VE/fbtlShCBqipyUO+nKRPvDHqLrecMW9pzHWMVRxk4nrMRoeowj3q0rX3GYRBa8lsHTAg==}
     engines: {node: '>=10.16'}
@@ -9585,7 +9601,6 @@ packages:
   /@pnpm/types@9.4.2:
     resolution: {integrity: sha512-g1hcF8Nv4gd76POilz9gD4LITAPXOe5nX4ijgr8ixCbLQZfcpYiMfJ+C1RlMNRUDo8vhlNB4O3bUlxmT6EAQXA==}
     engines: {node: '>=16.14'}
-    dev: false
 
   /@pnpm/write-project-manifest@1.1.7:
     resolution: {integrity: sha512-OLkDZSqkA1mkoPNPvLFXyI6fb0enCuFji6Zfditi/CLAo9kmIhQFmEUDu4krSB8i908EljG8YwL5Xjxzm5wsWA==}
@@ -22707,8 +22722,8 @@ packages:
       - typescript
     dev: true
 
-  /pnpm-sync-lib@0.2.6:
-    resolution: {integrity: sha512-6bEpWpEo2AJnUeMy6j1+3xm71C/h4LtHDmaBVyNgnsErgJ8uiB8ekWvgheVHsUxz038oFy2tAXPMHrr59VLbdA==}
+  /pnpm-sync-lib@0.2.9:
+    resolution: {integrity: sha512-qd2/crPxmpEXAWHlotOQfxQZ3a1fZIG4u73CiSPwPYDtd7Ithx7O3gtqzQb/0LXDEvk1NpL7u4xf7yEiUCqg3Q==}
     dependencies:
       '@pnpm/dependency-path': 2.1.8
       yaml: 2.4.1
